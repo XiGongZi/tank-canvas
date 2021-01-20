@@ -11,7 +11,8 @@ class Tank {
     cxt: {}
   }) {
     this.cxt = props.cxt;
-    this.setDefaultPosition(props.posi);
+    this.position = props.posi;
+    this.init();
   }
   position = [0, 0];
   x = 1;
@@ -38,37 +39,35 @@ class Tank {
   getTank = () => {
     // 根据坐标生成tank
     let [x, y] = this.getPosition();
-    let focus = this.getFocus();
-    if (focus === 0) return [
+    let foward = this.getFoward();
+    // left
+    if (foward === 0) return [
       [[x, y-1], [x+1, y-1]],
       [[x-1, y], [x, y] ],
       [[x, y+1], [x+1, y+1]]
     ];
     // right
-    if (focus === 1) return [
+    if (foward === 1) return [
       [[x-1, y-1], [x, y-1]],
       [[x, y], [x+1, y]],
       [[x-1, y+1], [x, y+1]]
     ];
     // up
-    if (focus === 2) return [
+    if (foward === 2) return [
       [[x, y-1]],
       [[x-1, y], [x, y], [x+1, y]],
       [[x-1, y+1], [x+1, y+1]]
     ];
     // down
-    if (focus === 3) return [
+    if (foward === 3) return [
       [[x-1, y-1], [x+1, y-1]],
       [[x-1, y],[x, y], [x+1, y]],
       [[x, y+1]]
     ];
   
   }
-  setDefaultPosition = (arr) => {
-    this.position = arr;
-  }
-  getFocus = () => {
-    // 0:left   1:right 2:up 3:down
+  getFoward = () => {
+    // 0:left 1:right 2:up 3:down
     if (this.x === -1) return 0;
     if (this.x === 1) return 1;
     if (this.y === -1) return 2;
@@ -78,7 +77,7 @@ class Tank {
   getPosition = () => {
     return this.position;
   }
-  move = () => {
+  moveAfter = () => {
     this.position = [
       this.position[0] + this.x,
       this.position[1] + this.y,
@@ -89,45 +88,63 @@ class Tank {
     // 左移
     this.x = -1;
     this.y = 0;
-    this.move();
+    this.moveAfter();
   }
   moveRight = () => {
     // 右移
     this.x = 1;
     this.y = 0;
-    this.move();
+    this.moveAfter();
   }
   moveUp = () => {
     // 上移
     this.x = 0;
     this.y = -1;
-    this.move();
+    this.moveAfter();
   }
   moveDown = () => {
     // 下移
     this.x = 0;
     this.y = 1;
-    this.move();
+    this.moveAfter();
   }
 }
 
 let tank = new Tank({posi: [6, 6],cxt});
 let tank1 = new Tank({posi: [16, 16],cxt: cxt1});
 
-tank.init();
-tank1.init();
+
 
 
 document.querySelector("body").onkeydown = function(e) {
-  console.log(e)
-  if (e.key=="ArrowLeft") tank.moveLeft();
-  if (e.key=="ArrowUp") tank.moveUp();
-  if (e.key=="ArrowRight") tank.moveRight();
-  if (e.key=="ArrowDown") tank.moveDown();
-
+  console.log(e.key)
+  switch (e.key) {
+    case "ArrowLeft":
+      tank.moveLeft();
+      break;
+    case "ArrowUp":
+      tank.moveUp();
+      break;
+    case "ArrowRight":
+      tank.moveRight();
+      break;
+    case "ArrowDown":
+      tank.moveDown();
+      break;
+    case "a":
+      tank1.moveLeft();
+      break;
+    case "w":
+      tank1.moveUp();
+      break;
+    case "d":
+      tank1.moveRight();
+      break;
+    case "s":
+      tank1.moveDown();
+      break;
   
-  if (e.key=="a") tank1.moveLeft();
-  if (e.key=="w") tank1.moveUp();
-  if (e.key=="d") tank1.moveRight();
-  if (e.key=="s") tank1.moveDown();
+    default:
+      break;
+  }
 }
