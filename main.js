@@ -1,23 +1,29 @@
-let myCanvas = document.getElementById("myCanvas");
-let myCanvas1 = document.getElementById("myCanvas1");
-let cxt = myCanvas.getContext("2d");
-let cxt1 = myCanvas1.getContext("2d");
-cxt.fillStyle="#000";
-cxt1.fillStyle="#26ad9c";
+// let myCanvas = document.getElementById("myCanvas");
+// let myCanvas1 = document.getElementById("myCanvas1");
+// let cxt1 = myCanvas1.getContext("2d");
+// cxt.fillStyle="#000";
+// cxt1.fillStyle="#26ad9c";
 
 class Tank {
   constructor(props = {
     posi: [0, 0],
-    cxt: {}
+    id: "",
+    color: "#000"
   }) {
-    this.cxt = props.cxt;
     this.position = props.posi;
-    this.init();
+    this.initTank({id: props.id,color: props.color});
   }
   position = [0, 0];
   x = 1;
   y = 0;
-  init = () => {
+  initTank = ({id,color}) => {
+    this.canvas = document.getElementById(id);
+    let cxt = this.canvas.getContext("2d");
+    cxt.fillStyle = color;
+    this.cxt = cxt;
+    this.initCanvas();
+  }
+  initCanvas = () => {
     this.clearTank();
     this.drawTank(this.getTank());
   }
@@ -82,7 +88,7 @@ class Tank {
       this.position[0] + this.x,
       this.position[1] + this.y,
     ];
-    this.init();
+    this.initCanvas();
   }
   moveLeft = () => {
     // 左移
@@ -110,8 +116,18 @@ class Tank {
   }
 }
 
-let tank = new Tank({posi: [6, 6],cxt});
-let tank1 = new Tank({posi: [16, 16],cxt: cxt1});
+let tank = new Tank({
+  posi: [6, 6],
+  id: "myCanvas",
+  color: "#000000"
+});
+let tank1 = new Tank({
+  posi: [16, 16],
+  id: "myCanvas1",
+  color: "#26ad9c"
+});
+
+
 
 
 
