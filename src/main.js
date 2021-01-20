@@ -1,13 +1,7 @@
-// let myCanvas = document.getElementById("myCanvas");
-// let myCanvas1 = document.getElementById("myCanvas1");
-// let cxt1 = myCanvas1.getContext("2d");
-// cxt.fillStyle="#000";
-// cxt1.fillStyle="#26ad9c";
-
 class Tank {
   constructor(props = {
     posi: [0, 0],
-    id: "",
+    id: "myCanvas",
     color: "#000"
   }) {
     this.position = props.posi;
@@ -115,22 +109,7 @@ class Tank {
     this.moveAfter();
   }
 }
-
-let tank = new Tank({
-  posi: [6, 6],
-  id: "myCanvas",
-  color: "#000000"
-});
-let tank1 = new Tank({
-  posi: [16, 16],
-  id: "myCanvas1",
-  color: "#26ad9c"
-});
-
-
-
-
-
+let tank = new Tank({posi: [6, 6]});
 
 document.querySelector("body").onkeydown = function(e) {
   console.log(e.key)
